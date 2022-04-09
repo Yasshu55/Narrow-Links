@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './css/home.css'
+import $ from 'jquery';
 
 const NewURL = () => {
 
@@ -46,10 +47,28 @@ const NewURL = () => {
     // console.log(url);
   }
 
+
+  function htmlEncode(value) {
+    return $('<div/>').text(value)
+      .html();
+    }
+    $(function () {
+    $('#generate').click(function () {
+  
+      
+      let finalURL =
+  'https://chart.googleapis.com/chart?cht=qr&chl=' +
+      htmlEncode($('#inputPassword2').val()) +
+      '&chs=160x160&chld=L|0'
+      $('.qr-code').attr('src', finalURL);
+    });
+    });
+
   const handleCopyClick = () => {
     navigator.clipboard.writeText(finalUrl);
     alert("Narrow URL Copied!!");
   }
+
 
   return (
 
@@ -61,6 +80,22 @@ const NewURL = () => {
     <>
 
     <body>
+
+      <div className="shortener">
+      <div className=" container my-5 ">
+
+        <h1 className="narrow-links">Narrow-Links</h1>
+
+        <form className="row g-3">
+          <div className="col-auto">
+            <input type="text" className="link-box form-control" id="inputPassword2" placeholder="Paste URL to shorten" value={url} onChange={handleChange} />
+          </div>
+          <div className="col-auto">
+            <button type="submit" className="shorten-button btn btn-primary mb-3" onClick={handleOnClick} id="generate">Narrow</button>
+          </div>
+        </form>
+        <div style={{height: '60px'}}>
+
     <div className="shortener">
     <div className=" container my-5 ">
       <h1 className="narrow-links">Narrow-Links</h1>
@@ -73,6 +108,7 @@ const NewURL = () => {
         </div>
       </form>
       <div style={{height: '70px'}}>
+
         <div className="narrowurl">{finalUrl}</div>
       </div>
       
@@ -80,8 +116,22 @@ const NewURL = () => {
         <div className="copy-btn col-md-6">
           <button type="copy" onClick={handleCopyClick} className="copy-button btn btn-primary mb-3">Copy Narrow-URL</button>
         </div>
+
+
+        <img className="hello1" src=
+"https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0"
+		class="qr-code img-thumbnail img-responsive" />
+        <div class="row">
+         
+          <div className="copy-btn col-md-6">
+           <button type="copy" className="copy-button btn btn-primary mb-3">Copy Narrow-URL</button>  
+          </div>
+          <div className="col-md-6">
+            <a className="QR-icon" href="">
+
         <div className="col-md-6">
           <a className="QR-icon" href="">
+
             <i class="fa-solid fa-qrcode"></i>
           </a>
         </div>
