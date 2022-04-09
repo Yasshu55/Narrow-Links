@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './css/home.css'
+import $ from 'jquery';
 
 const NewURL = () => {
 
@@ -44,6 +45,22 @@ const NewURL = () => {
     // console.log(url);
   }
 
+  function htmlEncode(value) {
+    return $('<div/>').text(value)
+      .html();
+    }
+    $(function () {
+    $('#generate').click(function () {
+  
+      
+      let finalURL =
+  'https://chart.googleapis.com/chart?cht=qr&chl=' +
+      htmlEncode($('#inputPassword2').val()) +
+      '&chs=160x160&chld=L|0'
+      $('.qr-code').attr('src', finalURL);
+    });
+    });
+
   return (
 
     // This is the HTML data of the homepage ie; the page in which we give original Url and get the short Url
@@ -64,14 +81,16 @@ const NewURL = () => {
             <input type="text" className="link-box form-control" id="inputPassword2" placeholder="Paste URL to shorten" value={url} onChange={handleChange} />
           </div>
           <div className="col-auto">
-            <button type="submit" className="shorten-button btn btn-primary mb-3" onClick={handleOnClick}>Narrow</button>
+            <button type="submit" className="shorten-button btn btn-primary mb-3" onClick={handleOnClick} id="generate">Narrow</button>
           </div>
         </form>
         <div style={{height: '60px'}}>
         <div className="narrowurl">{finalUrl}</div>
         </div>
 
-
+        <img className="hello1" src=
+"https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0"
+		class="qr-code img-thumbnail img-responsive" />
         <div class="row">
          
           <div className="copy-btn col-md-6">
